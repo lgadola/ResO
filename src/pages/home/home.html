@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+   <ion-title>
+      <img alt="logo" height="40"   src="http://reservation.squash-arena.ch:4430/{{(organisation | async)?.bannerFile.substring(2)}}" > 
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button *ngIf="!isLoggedIn()" (click)="login()">
+        <ion-icon name="log-in">Login</ion-icon>
+      </button>
+      <button ion-button *ngIf="isLoggedIn()" (click)="logout()">
+        <ion-icon name="log-out">Logout</ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-tabs #myTabs>
+  <ion-tab [root]="tab1Root" tabTitle="Abonnemente"></ion-tab>
+</ion-tabs>
+<ion-content>
+  <div *ngIf="me | async as user; else notLoggedIn" class="home" padding>
+  <h3>Welcome inside, {{ user.firstName }}!</h3>
+  Your Email is: {{ user.email }}
+  <br>
+  </div>
+  <ng-template #notLoggedIn>
+      <button ion-button (click)="login()">Log in</button>
+    </ng-template>
+</ion-content>
