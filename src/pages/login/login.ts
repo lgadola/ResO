@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
@@ -22,7 +21,7 @@ export class LoginPage {
     this.showLoading()
     this.auth.token_Post(this.registerCredentials).subscribe(allowed => {
       if (allowed) {    
-         this.nav.setRoot('HomePage');
+         this.nav.setRoot('MenuPage');
       } else {
         this.showError("Access Denied");
       }

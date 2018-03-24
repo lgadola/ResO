@@ -2,7 +2,7 @@ import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { HttpClient, HttpHeaders, HttpResponseBase, HttpResponse } from '@angular/common/http';
-import { tokenNotExpired } from '../../node_modules/angular2-jwt';
+import { DateTime } from 'ionic-angular';
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
@@ -62,7 +62,7 @@ export class AuthService {
         let result200: any = null;
         let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
         result200 = resultData200 !== undefined ? resultData200 : <any>null;
-        localStorage.setItem("access_token", resultData200.access_token);
+        localStorage.setItem("token", JSON.stringify(resultData200));
  
         return Observable.of(result200);
       });
@@ -87,21 +87,20 @@ export class AuthService {
   }
 
   public logout() {
-    return Observable.create(observer => {
       localStorage.clear();
-      observer.next(true);
-      observer.complete();
-    });
   }
   public getToken(): string {
-    return localStorage.getItem('access_token');
+    return localStorage.getItem('token');
   }
   public isAuthenticated(): boolean {
     // get the token
-    const token = this.getToken();
+    const tokenStruct = this.getToken();
+    if (tokenStruct == null) return false;
     // return a boolean reflecting 
     // whether or not the token is expired
-    return tokenNotExpired(null, token);
+    const struct = JSON.parse(tokenStruct);
+    const expires = struct[".expires"];
+    return expires < DateTime;
   }
 }
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {

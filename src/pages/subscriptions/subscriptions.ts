@@ -1,25 +1,32 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
-
-/**
- * Generated class for the SubscriptionsPage tabs.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Client } from '../../providers/api.service';
+import CustomStore from 'devextreme/data/custom_store';
+import 'rxjs/add/operator/toPromise';
 
 @IonicPage()
 @Component({
   selector: 'page-subscriptions',
-  templateUrl: 'subscriptions.html'
+  templateUrl: 'subscriptions.html',
 })
 export class SubscriptionsPage {
+  dataSource: any;
 
-  postingsRoot = 'PostingsPage'
-  reservationsRoot = 'ReservationsPage'
-  actionsRoot = 'ActionsPage'
+  constructor(public navCtrl: NavController, public navParams: NavParams, api: Client) {
+    this.dataSource.store = new CustomStore({
+      load: function () {
 
+          return api.subscriptionInstances_Query(null,null,null,null,null,null).toPromise()
+             .then(response => {
+               return response;
+              })
+              .catch(error => { throw 'Data Loading Error' });
+      }
+  });
+  }
 
-  constructor(public navCtrl: NavController) {}
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SubscriptionsPage');
+  }
 
 }

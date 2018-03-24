@@ -12,18 +12,15 @@ import { AuthService } from '../../providers/auth-service';
 export class HomePage {
   public organisation: Observable<OrganisationView> | null;
   public me: Observable<UserView> | null;
-  tab1Root: any = 'SubscriptionsPage';
 
   constructor(private nav: NavController, private auth: AuthService, private api: Client) {  }
   ionViewDidLoad() {
     this.organisation = this.api.organisations_Get(1);
-    if (this.auth.isAuthenticated)
+    if (this.auth.isAuthenticated())
       this.me = this.api.users_GetCurrentUser();
   }
   public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.nav.setRoot("HomePage");
-    });
+    this.auth.logout();
   }
   public login() {
     this.nav.push('LoginPage');

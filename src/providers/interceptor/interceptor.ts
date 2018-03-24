@@ -11,11 +11,11 @@ import { Observable } from 'rxjs/Observable';
 export class TokenInterceptor implements HttpInterceptor {
   constructor() { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem("access_token");
+    const token = JSON.parse(localStorage.getItem("token"));
     if (request.url.indexOf("/api/") > 0 && token) {
       request = request.clone({
         setHeaders: {
-          Authorization: "Bearer " + token
+          Authorization: "Bearer " + token.access_token
         }
       });
     }

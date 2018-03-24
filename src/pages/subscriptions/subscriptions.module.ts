@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { SubscriptionsPage } from './subscriptions';
+import { DxDataGridModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { SubscriptionsPage } from './subscriptions';
   ],
   imports: [
     IonicPageModule.forChild(SubscriptionsPage),
-  ]
+    DxDataGridModule
+  ],
 })
 export class SubscriptionsPageModule {}

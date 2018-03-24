@@ -1,5 +1,13 @@
-<ion-tabs>
-    <ion-tab [root]="postingsRoot" tabTitle="Postings" tabIcon="information-circle"></ion-tab>
-    <ion-tab [root]="reservationsRoot" tabTitle="Reservations" tabIcon="information-circle"></ion-tab>
-    <ion-tab [root]="actionsRoot" tabTitle="Actions" tabIcon="information-circle"></ion-tab>
-</ion-tabs>
+<ion-header>
+  <ion-navbar>
+    <ion-title>subscriptions</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <dx-data-grid id="dataGrid" [dataSource]="dataSource">
+    <dxi-column dataField="Id"></dxi-column>
+    <dxi-column dataField="SubscriptionTypeTitle"></dxi-column>
+  </dx-data-grid>
+</ion-content>
